@@ -1,0 +1,73 @@
+package BouncingBall;
+import java.util.ArrayList;
+import zen.core.Zen;
+
+public class BouncingBalls {
+
+	static int ballnumber = 20;
+
+	public static void main(String[] args) {
+		Zen.create(500, 500);
+
+		ArrayList<Ball> ballList = new ArrayList<Ball>();
+
+		int count = 0;
+		while (count<ballnumber) {
+			Ball b = new Ball();
+			ballList.add(b);
+			count++;
+		}
+
+		while(true){
+			setup();
+
+			for(Ball b1 : ballList){
+
+				b1.draw();
+				b1.move();
+
+				for(Ball b2 : ballList){
+					if(b1.collides(b2)){
+
+						if(b1.random == 2 && b2.random == 1){
+							b2.health = b2.health - 2;
+
+						}
+						if(b2.random == 2 && b1.random == 1){
+							b1.health = b1.health - 2;
+						}
+						if(b2.random == 1 && b1.random == 1){
+							b1.health = b1.health + 1;
+							b2.health = b2.health + 1;
+						}
+						if(b1.health <= 0){
+							b1.color = "red";
+						}
+						if(b2.health <= 0){
+							b2.color = "red";
+						}
+
+
+
+						b1.balldx = -b1.balldx;
+						b2.balldx = -b2.balldx;
+						b1.balldy = -b1.balldy;
+						b2.balldy = -b2.balldy;
+					}
+				}
+			}
+
+			Zen.buffer(33);
+
+		}
+	}
+
+	public static void setup(){
+		Zen.setBackground("white");
+		Zen.setFont("Arial", 20);
+		Zen.setColor("black");
+		Zen.drawText("Red : Infected", 0, 45);
+		Zen.drawText("Green : Human", 0, 20);
+	}
+
+}
