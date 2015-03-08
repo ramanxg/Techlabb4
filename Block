@@ -1,92 +1,94 @@
 package Tetris;
 
-import java.util.ArrayList;
-
 import zen.core.Zen;
 
-public class TetrisBlock {
-	
-	ArrayList <Block> children;
-	
+public class Block {
+	public static final int up = 1;
+	public static final int down = 2;
+	public static final int left = 3;
+	public static final int right = 4;
+
+	int x, y;
 	int type = Zen.dice(7);
+	int rotate = up;
+
 	Block[][] board;
+	TetrisBlock parent;
+
 	
 	
-	public TetrisBlock( int x, int y){
-		children  = new ArrayList <Block>();
-		
-		if(type == 1){
-			children.add(new Block(x, y ));
-			children.add(new Block(x + 1, y ));
-			children.add(new Block(x, y - 1 ));
-			children.add(new Block(x, y - 2));
-		}
-		if(type == 2){
-			children.add(new Block(x, y ));
-			children.add(new Block(x - 1, y ));
-			children.add(new Block(x, y - 1 ));
-			children.add(new Block(x, y - 2));
-		}
-		if(type == 3){
-			children.add(new Block(x, y - 1));
-			children.add(new Block(x, y - 2));
-			children.add(new Block(x, y - 3));
-			children.add(new Block(x, y - 4));
-		}
-		if(type == 4){
-			children.add(new Block(x - 1, y ));
-			children.add(new Block(x + 1, y ));
-			children.add(new Block(x, y ));
-			children.add(new Block(x, y - 1));
-		}
-		if(type == 5){
-			children.add(new Block(x, y + 1 ));
-			children.add(new Block(x, y ));
-			children.add(new Block(x + 1, y ));
-			children.add(new Block(x + 1, y - 1));
-		}
-		if(type == 6){
-			children.add(new Block(x, y + 1));
-			children.add(new Block(x, y ));
-			children.add(new Block(x - 1, y ));
-			children.add(new Block(x - 1, y - 1));
-		}
-		if(type == 7){
-			children.add(new Block(x, y ));
-			children.add(new Block(x + 1, y ));
-			children.add(new Block(x, y - 1 ));
-			children.add(new Block(x + 1, y - 1));
-		}
+	public Block(int x, int y){
+		this.x = x;
+		this.y = y;
 	}
-
-
-
 	
 
+	public void draw() {
+		Zen.setColor("red");
+		Zen.fillRect(x * Tetris.SCALE,  y * Tetris.SCALE, Tetris.SCALE, Tetris.SCALE);
+
+	}
+	
+	public boolean canMove(){
+		if(y + 1< Tetris.HEIGHT && board[x][y + 1] == null 
+				) {
+			return false;
+		}
+		
+		
+		return true;
+		
+	}
 
 	public void move() {
-		for(Block child : children){
-			child.move();
+
+		if(y+1 < Tetris.HEIGHT  && board[x][y + 1] == null){
+			board[x][y + 1] = board[x][y];
+			board[x][y] = null;
+			y++;
+
+
 		}
-		
 	}
 
-
-
-	public boolean canMove() {
-		for(Block child : children){
-			
+	public void moveLeft() {
+		if(x > Tetris.WIDTH && board[x - 1][y] == null) {
+			board[x - 1][y] = board[x][y];
+			board[x][y] = null;
+			x = x - 1;
 		}
-		
-		
+
+	}
+	public void moveRight() {
+		if(x + 1 < Tetris.WIDTH  && board[x + 1][y] == null) {
+			board[x + 1][y] = board[x][y];
+			board[x][y] = null;
+			x = x + 1;
+		}
+
+	}
+
+	public boolean atBottom() {
+
+		if(y + 1 == Tetris.HEIGHT ){
+			return true;
+		}
+		if(board[x][y + 1] != null){
+			return true;
+		}
+
 		return false;
 	}
+	
 	public void setBoard(Block[][] b) {
 		board = b;
-		for(Block child : children){
-			child.parent = this;
-			child.setBoard(board);
-		}
+		board[x][y] = this;
 		
 	}
+	
+
+
+
+
+
 }
