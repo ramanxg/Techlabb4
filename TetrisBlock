@@ -1,0 +1,92 @@
+package Tetris;
+
+import java.util.ArrayList;
+
+import zen.core.Zen;
+
+public class TetrisBlock {
+	
+	ArrayList <Block> children;
+	
+	int type = Zen.dice(7);
+	Block[][] board;
+	
+	
+	public TetrisBlock( int x, int y){
+		children  = new ArrayList <Block>();
+		
+		if(type == 1){
+			children.add(new Block(x, y ));
+			children.add(new Block(x + 1, y ));
+			children.add(new Block(x, y - 1 ));
+			children.add(new Block(x, y - 2));
+		}
+		if(type == 2){
+			children.add(new Block(x, y ));
+			children.add(new Block(x - 1, y ));
+			children.add(new Block(x, y - 1 ));
+			children.add(new Block(x, y - 2));
+		}
+		if(type == 3){
+			children.add(new Block(x, y - 1));
+			children.add(new Block(x, y - 2));
+			children.add(new Block(x, y - 3));
+			children.add(new Block(x, y - 4));
+		}
+		if(type == 4){
+			children.add(new Block(x - 1, y ));
+			children.add(new Block(x + 1, y ));
+			children.add(new Block(x, y ));
+			children.add(new Block(x, y - 1));
+		}
+		if(type == 5){
+			children.add(new Block(x, y + 1 ));
+			children.add(new Block(x, y ));
+			children.add(new Block(x + 1, y ));
+			children.add(new Block(x + 1, y - 1));
+		}
+		if(type == 6){
+			children.add(new Block(x, y + 1));
+			children.add(new Block(x, y ));
+			children.add(new Block(x - 1, y ));
+			children.add(new Block(x - 1, y - 1));
+		}
+		if(type == 7){
+			children.add(new Block(x, y ));
+			children.add(new Block(x + 1, y ));
+			children.add(new Block(x, y - 1 ));
+			children.add(new Block(x + 1, y - 1));
+		}
+	}
+
+
+
+	
+
+
+	public void move() {
+		for(Block child : children){
+			child.move();
+		}
+		
+	}
+
+
+
+	public boolean canMove() {
+		for(Block child : children){
+			
+		}
+		
+		
+		return false;
+	}
+	public void setBoard(Block[][] b) {
+		board = b;
+		for(Block child : children){
+			child.parent = this;
+			child.setBoard(board);
+		}
+		
+	}
+}
