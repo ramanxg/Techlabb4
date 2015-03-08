@@ -1,4 +1,4 @@
-package tetris;
+package Tetris;
 
 import zen.core.Zen;
 
@@ -9,7 +9,9 @@ public class Tetris {
 	public static final int SCALE = 30;
 
 	static Block[][] board;
-	static Block falling;
+	
+	static TetrisBlock falling;
+	
 
 	public static void main(String[] args) {
 		setup();
@@ -33,12 +35,11 @@ public class Tetris {
 	}
 
 	private static void addBlock(){
-		falling = new Block();
-		falling.x = WIDTH/2;
-		falling.y = 0;
-		falling.board = board;
+		falling = new TetrisBlock(WIDTH / 2, 4);
+		falling.setBoard(board);
+		TetrisBlock.add(falling);
 		
-		board[WIDTH/2][0] = falling;
+		
 		
 		
 	}
@@ -56,16 +57,18 @@ public class Tetris {
 	
 	private static void move() {
 		if (falling != null){
-			falling.move();
+			if(falling.canMove()){
+				falling.move();
+			}
 			
-			if(Zen.isKeyPressed("left")){
+		/*	if(Zen.isKeyPressed("left")){
 				falling.moveLeft();
 			}
 			if(Zen.isKeyPressed("right")){
 				falling.moveRight();
-			}
+			}*/
 		}
-		if(falling.atBottom()){
+		else {
 			addBlock();
 		}
 		
