@@ -3,92 +3,54 @@ package Tetris;
 import zen.core.Zen;
 
 public class Block {
-	public static final int up = 1;
-	public static final int down = 2;
-	public static final int left = 3;
-	public static final int right = 4;
-
-	int x, y;
-	int type = Zen.dice(7);
-	int rotate = up;
-
-	Block[][] board;
+	
 	TetrisBlock parent;
-
+	Block[][] board;
+	int x;
+	int y;
 	
-	
-	public Block(int x, int y){
+	public Block(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 	
-
 	public void draw() {
 		Zen.setColor("red");
-		Zen.fillRect(x * Tetris.SCALE,  y * Tetris.SCALE, Tetris.SCALE, Tetris.SCALE);
-
-	}
-	
-	public boolean canMove(){
-		if(y + 1< Tetris.HEIGHT && board[x][y + 1] == null 
-				) {
-			return false;
-		}
-		
-		
-		return true;
-		
+		Zen.fillRect(x * Tetris.SCALE, y * Tetris.SCALE, Tetris.SCALE, Tetris.SCALE);
 	}
 
-	public void move() {
-
-		if(y+1 < Tetris.HEIGHT  && board[x][y + 1] == null){
-			board[x][y + 1] = board[x][y];
-			board[x][y] = null;
-			y++;
-
-
-		}
-	}
-
-	public void moveLeft() {
-		if(x > Tetris.WIDTH && board[x - 1][y] == null) {
-			board[x - 1][y] = board[x][y];
-			board[x][y] = null;
-			x = x - 1;
-		}
-
-	}
-	public void moveRight() {
-		if(x + 1 < Tetris.WIDTH  && board[x + 1][y] == null) {
-			board[x + 1][y] = board[x][y];
-			board[x][y] = null;
-			x = x + 1;
-		}
-
-	}
-
-	public boolean atBottom() {
-
-		if(y + 1 == Tetris.HEIGHT ){
+	public boolean canMove() {
+		if (y + 1 < Tetris.HEIGHT && 
+				( board[x][y + 1] == null ||	// empty
+				  board[x][y + 1].parent == this.parent )) {
 			return true;
 		}
-		if(board[x][y + 1] != null){
-			return true;
-		}
-
 		return false;
 	}
 	
+	public boolean canMoveRight() {
+		if (x + 1 < Tetris.WIDTH && 
+				( board[x + 1][y] == null ||	// empty
+				  board[x + 1][y].parent == this.parent )) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void move() {
+		board[x][y + 1] = board[x][y];
+		board[x][y] = null; 
+		y = y + 1;
+	}
+	
+	public void moveRight() {
+		board[x + 1][y] = board[x][y];
+		board[x][y] = null; 
+		x = x + 1;
+	}
+
 	public void setBoard(Block[][] b) {
 		board = b;
 		board[x][y] = this;
-		
 	}
-	
-
-
-
-
-
 }
