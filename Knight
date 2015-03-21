@@ -1,0 +1,99 @@
+package testchess;
+import zen.core.Zen;
+
+import java.util.*;
+
+public class Knight extends Piece {
+
+	@Override
+	public Move[] getMoves() {
+
+		ArrayList<Move> moves = new ArrayList <Move> ();
+
+		int x = getX() + 2;
+		int y = getY() + 1;
+
+		if(isEmpty(x, y) || isOpponent(x, y)){
+			moves.add(new Move(this, x, y));
+		}
+
+		int x1 = getX() + 2;
+		int y1 = getY() - 1;
+		if(isEmpty(x1, y1) || isOpponent(x1, y1)){
+			moves.add(new Move(this, x1, y1));
+		}
+
+		int x2 = getX() - 2;
+		int y2 = getY() + 1;
+		if(isEmpty(x2, y2) || isOpponent(x2, y2)){
+			moves.add(new Move(this, x2, y2));
+		}
+
+		int x3 = getX() - 2;
+		int y3 = getY() - 1;
+		if(isEmpty(x3, y3) || isOpponent(x3, y3)){
+			moves.add(new Move(this, x3, y3));
+		}
+
+		int x4 = getX() - 1;
+		int y4 = getY() - 2;
+		if(isEmpty(x4, y4) || isOpponent(x4, y4)){
+			moves.add(new Move(this, x4, y4));
+		}
+
+		int x5 = getX() + 1;
+		int y5 = getY() + 2;
+		if(isEmpty(x5, y5) || isOpponent(x5, y5)){
+			moves.add(new Move(this, x5, y5));
+		}
+
+		int x6 = getX() + 1;
+		int y6 = getY() - 2;
+		if(isEmpty(x6, y6) || isOpponent(x6, y6)){
+			moves.add(new Move(this, x6, y6));
+		}
+
+		int x7 = getX() - 1;
+		int y7 = getY() + 2;
+		if(isEmpty(x7, y7) || isOpponent(x7, y7)){
+			moves.add(new Move(this, x7, y7));
+		}
+
+
+
+
+		return moves.toArray(new Move[moves.size()]);
+
+	}
+
+
+
+
+
+
+	@Override
+	public void draw() {
+		int x = getX() * Board.SCALE, 
+				y = getY() * Board.SCALE, 
+				s = Board.SCALE;
+
+		Zen.setColor(getColor());
+		Zen.fillPolygon(new int[] { 
+				x + s / 4, x + s / 2, x + 2 * s / 3, x + s * 2 / 3, x + s * 7 / 12, x + s * 7 / 12, x + s * 2 / 3, 
+				x + s * 3 / 4, x + s * 3 / 4, x + s / 4, x + s / 4,
+				x + s / 3, x + s / 3, x + s / 2, x + s / 4
+		}, new int[] {
+				y + s * 3 / 8, y + s / 5, y + s / 3, y + s / 2, y + s * 2 / 3, y + s * 3 / 4, y + s * 4 / 5, 
+				y + s * 4 / 5, y + s * 9 / 10, y + s * 9 / 10, y + s * 4 / 5,
+				y + s * 4 / 5, y + s * 3 / 5, y + s * 2 / 5, y + s / 2
+		});
+	}
+
+}
+
+
+
+
+
+
+
