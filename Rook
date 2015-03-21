@@ -1,0 +1,87 @@
+package testchess;
+
+import java.util.*;
+import zen.core.Zen;
+
+public  class Rook extends Piece{
+
+	@Override
+	public  Move[] getMoves() {
+		
+		ArrayList<Move> moves = new ArrayList <Move> ();
+		
+		int rx = getX() + 1;
+		int ry = getY();
+		
+		while(isValid(rx, ry)) {
+			if(isEmpty(rx, ry) || isOpponent(rx, ry)){
+				moves.add(new Move(this, rx, ry));
+			}
+			if(! isEmpty(rx, ry) || isOpponent(rx, ry)){
+				
+				break ;
+			}
+			rx = rx + 1;
+		}
+		int lx = getX() -1;
+		int ly = getY();
+		
+		while(isValid(lx, ly)) {
+			if(isEmpty(lx, ly) || isOpponent(lx, ly)){
+				moves.add(new Move(this, lx, ly));
+			}
+			if(! isEmpty(lx, ly) || isOpponent(lx, ly)){
+				
+				break ;
+			}
+			lx = lx - 1;
+		}
+		int ux = getX();
+		int uy = getY() - 1;
+		
+		while(isValid(ux, uy)) {
+			if(isEmpty(ux, uy) || isOpponent(ux, uy)){
+				moves.add(new Move(this, ux, uy));
+			}
+			if(! isEmpty(ux, uy) || isOpponent(ux, uy)){
+				
+				break ;
+			}
+			uy = uy - 1;
+		}
+		int dx = getX();
+		int dy = getY() + 1;
+		
+		while(isValid(dx, dy)) {
+			if(isEmpty(dx, dy) || isOpponent(dx, dy)){
+				moves.add(new Move(this, dx, dy));
+			}
+			if(! isEmpty(dx, dy) || isOpponent(dx, dy)){
+				
+				break ;
+			}
+			dy = dy + 1;
+		}
+				
+		return moves.toArray(new Move[moves.size()]);
+		
+	}
+	
+	
+	@Override
+	public void draw() {
+        int x = getX() * Board.SCALE, 
+            y = getY() * Board.SCALE, 
+            s = Board.SCALE,
+            w = s / 10;
+
+        Zen.setColor(getColor());
+        Zen.fillRect(x + s / 5, y + s / 6, w, s / 5);
+        Zen.fillRect(x + s / 2 - w / 2, y + s / 6, w, s / 5);
+        Zen.fillRect(x + s * 4 / 5 - w, y + s / 6, s / 10, s / 5);
+        Zen.fillRect(x + s / 5, y + s / 4, s * 3 / 5, s / 5);
+        Zen.fillRect(x + s / 4 + 2, y + s / 4, s / 2 - 4, s * 3 / 5);
+        Zen.fillRect(x + s / 5, y + s * 4 / 5, s * 3 / 5, s / 6);
+    }
+
+}
