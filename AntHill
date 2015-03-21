@@ -1,0 +1,24 @@
+package ants;
+
+import zen.core.Zen;
+
+public class AntHill {
+	int x;
+	int y;
+	
+	public AntHill(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void draw() {
+		
+		x = 250;
+		y = 250;
+		Zen.setColor("chocolate");
+		Zen.fillOval(x - 50, y - 50, 100, 100 );
+		Zen.setColor("black");
+		Zen.fillOval(x - 10, y - 10, 20, 20 );
+		
+	}
+}
