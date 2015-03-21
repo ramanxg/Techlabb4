@@ -1,0 +1,65 @@
+package ants;
+
+import zen.core.Zen;
+
+public class Ant {
+	int x;
+	int y;
+	int dx;
+	int dy;
+	boolean hasFood;
+	
+
+	public Ant(AntHill hill){
+		AntHill myHill = hill;
+		
+		x = hill.x;
+		y = hill.y;
+		dx = Zen.getRandomNumber(-4, 3);
+		dy = Zen.getRandomNumber(-4, 3);
+	}
+
+	public void move() {
+
+		if (hasFood) {
+			// go back to anthill
+		}
+		else{ 
+			x = x + dx;
+			y = y + dy;
+
+			if(Zen.dice(6) == 1){
+				dx += Zen.getRandomNumber (-3, 2);
+				if(dx > 3) { dx = 3; }
+				if(dx < -3) { dx = -3;}
+				dy += Zen.getRandomNumber(-3, 2);
+				if(dy > 3) {dy = 3;}
+				if(dy < -3) { dy = -3;}
+			}
+		}
+	}
+
+	public void draw() {
+		
+		Zen.setColor("black") ;
+		Zen.fillOval(x,  y,  10,  10);	
+		
+
+	}
+
+	public boolean canEat(Food f) {
+		if(f. size <= 0){
+			return false;
+		}
+		int dx = f.x - x;
+		int dy = f.y - y;
+		if(Math.sqrt(dx*dx + dy * dy) < f. size){
+			return true;
+		}
+		
+		return false;
+	}
+
+	
+
+}
