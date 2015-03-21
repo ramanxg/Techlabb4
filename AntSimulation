@@ -1,0 +1,54 @@
+package ants;
+
+import java.util.ArrayList;
+
+import Bacteria.Bacteria;
+import Bacteria.Cheese;
+import zen.core.Zen;
+
+
+
+public class Simulation {
+
+	public static void main(String[] args) {
+
+		Zen.create(500,  500);
+
+		ArrayList <Ant> ants = new ArrayList <Ant> ();
+		AntHill hill = new AntHill(250, 250);
+		Food f = new Food(250, 250, 1000);
+
+		while (true) {
+			Zen.setBackground("tan");
+
+			hill.draw();
+
+			if(Zen.dice(6) == 1){
+				ants.add(new Ant(hill));
+			}
+
+			for( int i = 0; i < ants.size (); i ++) {
+				ants.get(i).draw();
+				ants.get(i).move();
+
+
+				if(ants.get(i).canEat(f)){
+
+					if(Zen.dice(6) == 1){
+						ants.add(new Ant(hill));
+					}
+
+					if(Zen.dice(8) == 1) {
+						ants.remove(i);
+						i--;
+					}
+				}
+			}
+
+			Zen.buffer(33);
+		}
+
+
+	}
+
+}
