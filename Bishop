@@ -1,0 +1,89 @@
+package testchess;
+
+import zen.core.Zen;
+
+import java.util.*;
+
+public class Bishop extends Piece {
+
+	@Override
+	public void draw() {
+		int x = getX() * Board.SCALE, 
+				y = getY() * Board.SCALE, 
+				s = Board.SCALE;
+
+		Zen.setColor(getColor());
+		Zen.fillOval(x + s * 2 / 5, y + s / 8, s / 5, s / 5);
+		Zen.fillPolygon(
+				new int[] { x + s / 2, x + s * 3 / 4, x + s / 4 },
+				new int[] { y + s / 6, y + s / 2, y + s / 2 }
+				);
+		Zen.fillRect(x + s / 3, y + s / 2, s / 3, s / 3);
+		Zen.fillRect(x + s / 4, y + s * 5 / 6, s / 2, s / 10);
+	}
+
+	@Override
+	public Move[] getMoves() {
+		ArrayList<Move> moves = new ArrayList <Move> ();
+
+		int rx = getX() + 1;
+		int ry = getY() + 1;
+
+		while(isValid(rx, ry)) {
+			if(isEmpty(rx, ry) || isOpponent(rx, ry)){
+				moves.add(new Move(this, rx, ry));
+			}
+			if(! isEmpty(rx, ry) || isOpponent(rx, ry)){
+
+				break ;
+			}
+			rx = rx + 1;
+			ry = ry + 1;
+		}
+		int lx = getX() -1;
+		int ly = getY() - 1;
+
+		while(isValid(lx, ly)) {
+			if(isEmpty(lx, ly) || isOpponent(lx, ly)){
+				moves.add(new Move(this, lx, ly));
+			}
+			if(! isEmpty(lx, ly) || isOpponent(lx, ly)){
+
+				break ;
+			}
+			lx = lx - 1;
+			ly = ly - 1;
+		}
+		int ux = getX() + 1;
+		int uy = getY() - 1;
+
+		while(isValid(ux, uy)) {
+			if(isEmpty(ux, uy) || isOpponent(ux, uy)){
+				moves.add(new Move(this, ux, uy));
+			}
+			if(! isEmpty(ux, uy) || isOpponent(ux, uy)){
+
+				break ;
+			}
+			uy = uy - 1;
+			ux = ux + 1;
+			
+		}
+		int dx = getX() - 1;
+		int dy = getY() + 1;
+		
+		while(isValid(dx, dy)) {
+			if(isEmpty(dx, dy) || isOpponent(dx, dy)){
+				moves.add(new Move(this, dx, dy));
+			}
+			if(! isEmpty(dx, dy) || isOpponent(dx, dy)){
+				
+				break ;
+			}
+			
+			dx = dx - 1;
+			dy = dy + 1;
+		}
+		return moves.toArray(new Move[moves.size()]);
+	}
+}
