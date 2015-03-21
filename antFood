@@ -1,0 +1,29 @@
+package ants;
+
+import zen.core.Zen;
+
+public class Food {
+	
+	int x;
+	int y;
+	double size;
+	
+	public Food(int x, int y, int size) {
+		this.x = x;
+		this.y = y;
+		this.size = size;
+	}
+	public void eat() {
+		size = size - 0.0001; 
+	}
+
+	public void draw() {
+		int s = (int) size;
+		Zen.setColor("green");
+		Zen.fillOval(x - s / 2, y - s /2, s, s);
+	}
+	
+	
+}
+
+
