@@ -1,0 +1,60 @@
+package predatorandprey;
+
+import java.util.ArrayList;
+
+import zen.core.Zen;
+
+public class Main {
+	public static void main(String[] args) {
+
+		Zen.create(500,500);
+		ArrayList <Prey> prey = new ArrayList <Prey> ();
+		ArrayList <Predator> predators = new ArrayList <Predator> ();
+
+		for(int i = 0; i < 1000000; i++) {
+			Prey p = new Prey();
+			prey.add(p);
+		}
+
+		for(int i = 0; i < 5; i++) {
+			Predator p = new Predator();
+			predators.add(p);
+		}
+
+
+		while (true) {
+			Zen.setBackground("tan");
+
+			for(int i = 0; i < prey.size(); i ++) {
+				prey.get(i).draw();
+				prey.get(i).move();
+			}
+			for(int i = 0; i < predators.size(); i ++) {
+				predators.get(i).draw();
+				predators.get(i).move();
+			}
+			
+			for(int i = 0; i < predators.size(); i++) {
+				for (int j = 0; j < prey.size(); j++){
+					if(predators.get(i).isTouching(prey.get(j))){
+						prey.remove(j);
+					}
+				}
+			}
+			for(int i = 0; i < predators.size(); i++) {
+				for (int j = 0; j < predators.size(); j++){
+					if(predators.get(i).cannibalize(predators.get(j))){
+						predators.remove(j);
+						
+					}
+				}
+			}
+
+
+			Zen.buffer(5);
+
+		}
+
+
+	}
+}
