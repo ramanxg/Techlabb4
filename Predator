@@ -1,0 +1,68 @@
+package predatorandprey;
+
+import zen.core.Zen;
+
+public class Predator {
+	int x;
+	int y;
+	int size;
+	int dx;
+	int dy;
+
+	public Predator () {
+		x = Zen.getRandomNumber(500);
+		y = Zen.getRandomNumber(500);
+		size = Zen.getRandomNumber(15, 20);
+		dx = Zen.getRandomNumber(-7, 7);
+		dy = Zen.getRandomNumber(-7, 7);
+	}
+	public Predator (int x,int y,int size,int dx, int dy) {
+
+	}
+	public void move() {
+		x += dx;
+		if(x >= 500 - size/2){
+			dx = Zen.getRandomNumber(-7, -3);
+		}
+		if(x <= 0 + size/2){
+			dx = Zen.getRandomNumber(3, 7);
+		}
+		y += dy;
+		if(y >= 500 - size/2){
+			dy = Zen.getRandomNumber(-7, -3);
+		}
+		if(y <= 0 + size/2) {
+			dy = Zen.getRandomNumber(3, 7);
+		}
+	}
+	public void draw() {
+		Zen.setColor("black");
+
+		Zen.fillOval(x, y, size, size);
+
+	}
+	public boolean isTouching(Prey p){
+		if(Math.abs(x - p.x) < size/2 && Math.abs(y - p.y) < size/2){
+			size += 2;
+			return true;
+		}
+
+		return false;
+	}
+	public boolean cannibalize(Predator p){
+		if(p != this){
+
+			if(Math.abs(x - p.x) < size/2 && Math.abs(y - p.y) < size/2){
+
+
+				if(size < p.size){
+					return false;
+				}
+
+				size += 3 ;
+				return true;
+			}
+		}
+		return false;
+	}
+}
